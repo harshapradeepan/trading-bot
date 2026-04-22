@@ -1,0 +1,105 @@
+2026-04-22 04:49:00 | DEBUG    | cli | CLI: symbol=BTCUSDT side=BUY type=MARKET qty=0.01
+2026-04-22 04:49:00 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 04:49:00 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 04:49:00 | DEBUG    | validators | Side OK: BUY
+2026-04-22 04:49:00 | DEBUG    | validators | Order type OK: MARKET
+2026-04-22 04:49:00 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 04:49:00 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 04:49:00 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 04:49:00 | INFO     | orders | Mock order | orderId=843209590 symbol=BTCUSDT side=BUY type=MARKET qty=0.01 status=FILLED
+2026-04-22 04:49:04 | DEBUG    | cli | CLI: symbol=ETHUSDT side=BUY type=LIMIT qty=0.5
+2026-04-22 04:49:04 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 04:49:04 | DEBUG    | validators | Symbol OK: ETHUSDT
+2026-04-22 04:49:04 | DEBUG    | validators | Side OK: BUY
+2026-04-22 04:49:04 | DEBUG    | validators | Order type OK: LIMIT
+2026-04-22 04:49:04 | DEBUG    | validators | Quantity OK: 0.5
+2026-04-22 04:49:04 | DEBUG    | validators | Price OK: 3100.0
+2026-04-22 04:49:04 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 04:49:04 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 04:49:04 | INFO     | orders | Mock order | orderId=287918829 symbol=ETHUSDT side=BUY type=LIMIT qty=0.5 status=NEW
+2026-04-22 04:49:05 | DEBUG    | cli | CLI: symbol=BTCUSDT side=SELL type=MARKET qty=0.02
+2026-04-22 04:49:05 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 04:49:05 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 04:49:05 | DEBUG    | validators | Side OK: SELL
+2026-04-22 04:49:05 | DEBUG    | validators | Order type OK: MARKET
+2026-04-22 04:49:05 | DEBUG    | validators | Quantity OK: 0.02
+2026-04-22 04:49:05 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 04:49:05 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 04:49:05 | INFO     | orders | Mock order | orderId=377793259 symbol=BTCUSDT side=SELL type=MARKET qty=0.02 status=FILLED
+2026-04-22 04:49:05 | DEBUG    | cli | CLI: symbol=SOLUSDT side=BUY type=STOP_MARKET qty=2.0
+2026-04-22 04:49:05 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 04:49:05 | DEBUG    | validators | Symbol OK: SOLUSDT
+2026-04-22 04:49:05 | DEBUG    | validators | Side OK: BUY
+2026-04-22 04:49:05 | DEBUG    | validators | Order type OK: STOP_MARKET
+2026-04-22 04:49:05 | DEBUG    | validators | Quantity OK: 2.0
+2026-04-22 04:49:05 | DEBUG    | validators | Stop price OK: 140.0
+2026-04-22 04:49:05 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 04:49:05 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 04:49:05 | INFO     | orders | Mock order | orderId=856146916 symbol=SOLUSDT side=BUY type=STOP_MARKET qty=2.0 status=NEW
+2026-04-22 04:49:06 | DEBUG    | cli | CLI: symbol=BTCUSDT side=SELL type=LIMIT qty=0.01
+2026-04-22 04:49:06 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 04:49:06 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 04:49:06 | DEBUG    | validators | Side OK: SELL
+2026-04-22 04:49:06 | DEBUG    | validators | Order type OK: LIMIT
+2026-04-22 04:49:06 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 04:49:06 | DEBUG    | validators | Price OK: 90000.0
+2026-04-22 04:49:06 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 04:49:06 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 04:49:06 | INFO     | orders | Mock order | orderId=328342975 symbol=BTCUSDT side=SELL type=LIMIT qty=0.01 status=NEW
+2026-04-22 10:22:51 | INFO     | web_ui | Web order: BUY MARKET BTCUSDT qty=0.01
+2026-04-22 10:22:51 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 10:22:51 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 10:22:51 | DEBUG    | validators | Side OK: BUY
+2026-04-22 10:22:51 | DEBUG    | validators | Order type OK: MARKET
+2026-04-22 10:22:51 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 10:22:51 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 10:22:51 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 10:22:51 | INFO     | orders | Mock order | orderId=986366674 symbol=BTCUSDT side=BUY type=MARKET qty=0.01 status=FILLED
+2026-04-22 10:23:03 | INFO     | web_ui | Web order: SELL MARKET BTCUSDT qty=0.01
+2026-04-22 10:23:03 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 10:23:03 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 10:23:03 | DEBUG    | validators | Side OK: SELL
+2026-04-22 10:23:03 | DEBUG    | validators | Order type OK: MARKET
+2026-04-22 10:23:03 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 10:23:03 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 10:23:03 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 10:23:03 | INFO     | orders | Mock order | orderId=507802138 symbol=BTCUSDT side=SELL type=MARKET qty=0.01 status=FILLED
+2026-04-22 10:23:20 | INFO     | web_ui | Web order: SELL LIMIT BTCUSDT qty=0.01
+2026-04-22 10:23:20 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 10:23:20 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 10:23:20 | DEBUG    | validators | Side OK: SELL
+2026-04-22 10:23:20 | DEBUG    | validators | Order type OK: LIMIT
+2026-04-22 10:23:20 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 10:23:20 | DEBUG    | validators | Price OK: 50000.0
+2026-04-22 10:23:20 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 10:23:20 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 10:23:20 | INFO     | orders | Mock order | orderId=353164639 symbol=BTCUSDT side=SELL type=LIMIT qty=0.01 status=NEW
+2026-04-22 10:24:47 | DEBUG    | cli | CLI: symbol=BTCUSDT side=BUY type=MARKET qty=0.01
+2026-04-22 10:24:47 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 10:24:47 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 10:24:47 | DEBUG    | validators | Side OK: BUY
+2026-04-22 10:24:47 | DEBUG    | validators | Order type OK: MARKET
+2026-04-22 10:24:47 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 10:24:47 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 10:24:47 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 10:24:47 | INFO     | orders | Mock order | orderId=853442593 symbol=BTCUSDT side=BUY type=MARKET qty=0.01 status=FILLED
+2026-04-22 10:24:48 | DEBUG    | cli | CLI: symbol=BTCUSDT side=BUY type=LIMIT qty=0.01
+2026-04-22 10:24:48 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 10:24:48 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 10:24:48 | DEBUG    | validators | Side OK: BUY
+2026-04-22 10:24:48 | DEBUG    | validators | Order type OK: LIMIT
+2026-04-22 10:24:48 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 10:24:48 | DEBUG    | validators | Price OK: 50000.0
+2026-04-22 10:24:48 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 10:24:48 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 10:24:48 | INFO     | orders | Mock order | orderId=556349745 symbol=BTCUSDT side=BUY type=LIMIT qty=0.01 status=NEW
+2026-04-22 10:24:49 | DEBUG    | cli | CLI: symbol=BTCUSDT side=SELL type=STOP_MARKET qty=0.01
+2026-04-22 10:24:49 | DEBUG    | client | BinanceClient initialised — base URL: https://testnet.binancefuture.com
+2026-04-22 10:24:49 | DEBUG    | validators | Symbol OK: BTCUSDT
+2026-04-22 10:24:49 | DEBUG    | validators | Side OK: SELL
+2026-04-22 10:24:49 | DEBUG    | validators | Order type OK: STOP_MARKET
+2026-04-22 10:24:49 | DEBUG    | validators | Quantity OK: 0.01
+2026-04-22 10:24:49 | DEBUG    | validators | Stop price OK: 30000.0
+2026-04-22 10:24:49 | DEBUG    | validators | All inputs passed validation.
+2026-04-22 10:24:49 | WARNING  | orders | MOCK MODE ACTIVE — no real API call made
+2026-04-22 10:24:49 | INFO     | orders | Mock order | orderId=904591163 symbol=BTCUSDT side=SELL type=STOP_MARKET qty=0.01 status=NEW

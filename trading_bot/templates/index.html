@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Trading Bot — Mock Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #0a0c10;
+    --panel:    #111318;
+    --border:   #1e2330;
+    --accent:   #f0b90b;
+    --green:    #00c087;
+    --red:      #f6465d;
+    --text:     #e2e8f0;
+    --muted:    #64748b;
+    --input-bg: #181c25;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(240,185,11,0.07) 0%, transparent 60%),
+      repeating-linear-gradient(0deg,  transparent, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 41px),
+      repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.01) 40px, rgba(255,255,255,0.01) 41px);
+  }
+
+  /* ── Header ── */
+  header { text-align: center; margin-bottom: 36px; animation: fadeDown 0.6s ease both; }
+  .logo  { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 6px; }
+  .logo-icon { width: 44px; height: 44px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }
+  h1 span { color: var(--accent); }
+  .subtitle { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+
+  /* ── Mock banner ── */
+  .mock-banner {
+    width: 100%; max-width: 900px;
+    background: rgba(240,185,11,0.07); border: 1px solid rgba(240,185,11,0.28);
+    border-radius: 10px; padding: 10px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; animation: fadeDown 0.5s ease both;
+  }
+  .mock-banner span { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px; }
+
+  /* ── Ticker bar ── */
+  .ticker-bar {
+    width: 100%; max-width: 900px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 24px;
+    display: flex; gap: 32px; flex-wrap: wrap;
+    margin-bottom: 24px; animation: fadeDown 0.5s 0.1s ease both;
+  }
+  .ticker-item { display: flex; flex-direction: column; gap: 2px; }
+  .ticker-label { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .ticker-value { font-family: 'Space Mono', monospace; font-size: 0.88rem; font-weight: 700; color: var(--accent); }
+  .ticker-value.green { color: var(--green); }
+
+  /* ── Grid ── */
+  .main-grid {
+    width: 100%; max-width: 900px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  /* ── Cards ── */
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 26px; }
+  .card-title {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 2px;
+    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+  }
+  .card-title::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  /* ── Form fields ── */
+  .field { margin-bottom: 16px; }
+  label { display: block; font-family: 'Space Mono', monospace; font-size: 0.66rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  input, select {
+    width: 100%; background: var(--input-bg); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-family: 'Space Mono', monospace; font-size: 0.84rem;
+    padding: 10px 14px; outline: none; transition: border-color 0.2s;
+  }
+  input:focus, select:focus { border-color: var(--accent); }
+  select option { background: var(--panel); }
+
+  .side-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .side-btn {
+    padding: 10px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--input-bg); color: var(--muted);
+    font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 1px;
+  }
+  .side-btn.buy.active  { background: rgba(0,192,135,0.15); border-color: var(--green); color: var(--green); }
+  .side-btn.sell.active { background: rgba(246,70,93,0.15);  border-color: var(--red);   color: var(--red); }
+  .side-btn:hover { opacity: 0.8; }
+
+  .type-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .type-tab {
+    padding: 7px 13px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--input-bg); color: var(--muted);
+    font-family: 'Space Mono', monospace; font-size: 0.68rem;
+    cursor: pointer; transition: all 0.2s; letter-spacing: 1px;
+  }
+  .type-tab.active { background: rgba(240,185,11,0.14); border-color: var(--accent); color: var(--accent); }
+
+  #price-field, #stop-price-field { display: none; }
+
+  /* ── Submit button ── */
+  .submit-btn {
+    width: 100%; padding: 14px; border-radius: 10px; border: none;
+    font-family: 'Syne', sans-serif; font-size: 0.94rem; font-weight: 700;
+    cursor: pointer; letter-spacing: 1px; margin-top: 8px; transition: all 0.2s;
+  }
+  .submit-btn.buy-btn  { background: var(--green); color: #fff; }
+  .submit-btn.sell-btn { background: var(--red);   color: #fff; }
+  .submit-btn:hover  { transform: translateY(-1px); filter: brightness(1.1); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .spinner {
+    display: inline-block; width: 13px; height: 13px;
+    border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+    border-radius: 50%; animation: spin 0.6s linear infinite;
+    vertical-align: middle; margin-right: 6px;
+  }
+
+  /* ── Result panel ── */
+  .result-panel { grid-column: 1 / -1; display: none; }
+  .result-panel.show { display: block; }
+  .result-panel.mock-result { border: 1px solid rgba(240,185,11,0.22); background: rgba(240,185,11,0.02); }
+
+  .result-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .result-title.success { color: var(--green); }
+  .result-title.error   { color: var(--red); }
+
+  .result-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 12px; }
+  .result-field { display: flex; flex-direction: column; gap: 4px; }
+  .rf-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .rf-value { font-family: 'Space Mono', monospace; font-size: 0.84rem; color: var(--text); font-weight: 700; }
+  .rf-value.filled { color: var(--green); }
+  .rf-value.new    { color: var(--accent); }
+  .rf-value.buy    { color: var(--green); }
+  .rf-value.sell   { color: var(--red); }
+
+  /* ── Log panel ── */
+  .log-panel { grid-column: 1 / -1; max-height: 190px; overflow-y: auto; }
+  .log-line {
+    font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--muted);
+    padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.03); animation: fadeIn 0.3s ease;
+  }
+  .log-line .ts          { color: #334155; margin-right: 8px; }
+  .log-line .info        { color: var(--accent); }
+  .log-line .error-tag   { color: var(--red); }
+  .log-line .success-tag { color: var(--green); }
+  .log-line .mock-tag    { color: var(--accent); }
+
+  .live-dot { display: inline-block; width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 1.5s infinite; margin-right: 6px; }
+
+  /* ── Animations ── */
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp   { from { opacity:0; transform:translateY(14px);  } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn   { from { opacity:0; } to { opacity:1; } }
+  @keyframes spin     { to { transform: rotate(360deg); } }
+  @keyframes pulse    { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+
+  @media (max-width: 640px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .result-panel, .log-panel { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🤖</div>
+    <h1>Binance<span>Bot</span></h1>
+  </div>
+  <p class="subtitle">Binance Futures &nbsp;·&nbsp; Mock Mode</p>
+</header>
+
+<div class="mock-banner">
+  <span>⚠️ &nbsp;MOCK MODE — All orders are simulated. No real API calls are made.</span>
+  <span id="clockBadge" style="color:var(--muted)">--:--:--</span>
+</div>
+
+<div class="ticker-bar">
+  <div class="ticker-item">
+    <span class="ticker-label">Network</span>
+    <span class="ticker-value green">● MOCK</span>
+  </div>
+  <div class="ticker-item">
+    <span class="ticker-label">Server Time</span>
+    <span class="ticker-value green" id="serverTime">—</span>
+  </div>
+  <div class="ticker-item">
+    <span class="ticker-label">Endpoint</span>
+    <span class="ticker-value">SIMULATED</span>
+  </div>
+  <div class="ticker-item">
+    <span class="ticker-label">Mode</span>
+    <span class="ticker-value">MOCK</span>
+  </div>
+</div>
+
+<div class="main-grid">
+
+  <!-- Order Form -->
+  <div class="card">
+    <div class="card-title">Place Order</div>
+
+    <div class="field">
+      <label>Side</label>
+      <div class="side-toggle">
+        <button class="side-btn buy active" onclick="setSide('BUY')">BUY</button>
+        <button class="side-btn sell"       onclick="setSide('SELL')">SELL</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Order Type</label>
+      <div class="type-tabs">
+        <button class="type-tab active"    onclick="setType('MARKET',      this)">MARKET</button>
+        <button class="type-tab"           onclick="setType('LIMIT',       this)">LIMIT</button>
+        <button class="type-tab"           onclick="setType('STOP_MARKET', this)">STOP MARKET</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Symbol</label>
+      <input type="text" id="symbol" value="BTCUSDT" placeholder="e.g. BTCUSDT" style="text-transform:uppercase"/>
+    </div>
+
+    <div class="field">
+      <label>Quantity</label>
+      <input type="number" id="quantity" value="0.01" step="0.001" placeholder="e.g. 0.01"/>
+    </div>
+
+    <div class="field" id="price-field">
+      <label>Limit Price (USDT)</label>
+      <input type="number" id="price" placeholder="e.g. 50000"/>
+    </div>
+
+    <div class="field" id="stop-price-field">
+      <label>Stop Price (USDT)</label>
+      <input type="number" id="stop_price" placeholder="e.g. 30000"/>
+    </div>
+
+    <button class="submit-btn buy-btn" id="submitBtn" onclick="placeOrder()">
+      BUY / LONG
+    </button>
+  </div>
+
+  <!-- Order Preview + Price Reference -->
+  <div class="card">
+    <div class="card-title">Order Preview</div>
+    <div id="preview" style="font-family:'Space Mono',monospace;font-size:0.74rem;color:var(--muted);line-height:2.1;">
+      Fill the form to see preview...
+    </div>
+
+    <div style="margin-top:24px;">
+      <div class="card-title">Mock Price Reference</div>
+      <div id="priceRef" style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--muted);line-height:2.1;"></div>
+    </div>
+  </div>
+
+  <!-- Result Panel -->
+  <div class="card result-panel" id="resultPanel">
+    <div id="resultContent"></div>
+  </div>
+
+  <!-- Activity Log -->
+  <div class="card log-panel">
+    <div class="card-title"><span class="live-dot"></span>Activity Log</div>
+    <div id="logLines">
+      <div class="log-line"><span class="ts">--:--:--</span><span class="mock-tag"> Bot UI initialised — MOCK MODE ACTIVE</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let currentSide = 'BUY';
+  let currentType = 'MARKET';
+
+  const MOCK_PRICES = {
+    BTCUSDT:  84000,
+    ETHUSDT:  3200,
+    BNBUSDT:  580,
+    SOLUSDT:  145,
+    XRPUSDT:  0.52,
+    DOGEUSDT: 0.12,
+  };
+
+  // ── Price reference table ──────────────────────────────────────────────────
+  function buildPriceRef() {
+    document.getElementById('priceRef').innerHTML =
+      Object.entries(MOCK_PRICES).map(([sym, p]) =>
+        `<span style="color:var(--text)">${sym.padEnd(10,' ')}</span>` +
+        `<span style="color:var(--green)">~${p.toLocaleString()} USDT</span><br>`
+      ).join('');
+  }
+
+  function getMockPrice(symbol) {
+    const base = MOCK_PRICES[symbol.toUpperCase()] || 1000;
+    return (base * (1 + (Math.random() - 0.5) * 0.006)).toFixed(2);
+  }
+
+  // ── Side toggle ────────────────────────────────────────────────────────────
+  function setSide(side) {
+    currentSide = side;
+    document.querySelectorAll('.side-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.side-btn.' + side.toLowerCase()).classList.add('active');
+    const btn = document.getElementById('submitBtn');
+    btn.className   = side === 'BUY' ? 'submit-btn buy-btn' : 'submit-btn sell-btn';
+    btn.textContent = side === 'BUY' ? 'BUY / LONG' : 'SELL / SHORT';
+    updatePreview();
+  }
+
+  // ── Order type ─────────────────────────────────────────────────────────────
+  function setType(type, el) {
+    currentType = type;
+    document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('price-field').style.display      = type === 'LIMIT'       ? 'block' : 'none';
+    document.getElementById('stop-price-field').style.display = type === 'STOP_MARKET' ? 'block' : 'none';
+    updatePreview();
+  }
+
+  // ── Live preview ───────────────────────────────────────────────────────────
+  function updatePreview() {
+    const sym   = (document.getElementById('symbol').value   || 'BTCUSDT').toUpperCase();
+    const qty   =  document.getElementById('quantity').value || '—';
+    const price =  document.getElementById('price').value;
+    const stop  =  document.getElementById('stop_price').value;
+    const col   = currentSide === 'BUY' ? 'var(--green)' : 'var(--red)';
+
+    let html = `
+      <span style="color:var(--text)">Symbol &nbsp;&nbsp;:</span> ${sym}<br>
+      <span style="color:var(--text)">Side &nbsp;&nbsp;&nbsp;&nbsp;:</span> <span style="color:${col}">${currentSide}</span><br>
+      <span style="color:var(--text)">Type &nbsp;&nbsp;&nbsp;&nbsp;:</span> ${currentType}<br>
+      <span style="color:var(--text)">Quantity :</span> ${qty}<br>
+      <span style="color:var(--accent)">Mode &nbsp;&nbsp;&nbsp;&nbsp;: MOCK</span>
+    `;
+    if (currentType === 'LIMIT'       && price) html += `<br><span style="color:var(--text)">Price &nbsp;&nbsp;&nbsp;:</span> ${price} USDT`;
+    if (currentType === 'STOP_MARKET' && stop)  html += `<br><span style="color:var(--text)">Stop &nbsp;&nbsp;&nbsp;&nbsp;:</span> ${stop} USDT`;
+    document.getElementById('preview').innerHTML = html;
+  }
+
+  // ── Log ────────────────────────────────────────────────────────────────────
+  function addLog(msg, type = 'info') {
+    const now      = new Date().toLocaleTimeString('en-GB');
+    const tagClass = type === 'error' ? 'error-tag' : type === 'success' ? 'success-tag' : type === 'mock' ? 'mock-tag' : 'info';
+    const div      = document.createElement('div');
+    div.className  = 'log-line';
+    div.innerHTML  = `<span class="ts">${now}</span><span class="${tagClass}"> ${msg}</span>`;
+    const c = document.getElementById('logLines');
+    c.appendChild(div);
+    c.scrollTop = c.scrollHeight;
+  }
+
+  // ── Mock order engine ──────────────────────────────────────────────────────
+  function mockOrder(symbol, side, type, quantity, price, stopPrice) {
+    const fillPrice = price     ? parseFloat(price)
+                    : stopPrice ? parseFloat(stopPrice)
+                    : parseFloat(getMockPrice(symbol));
+    const filled    = type === 'MARKET';
+    return {
+      orderId:     Math.floor(Math.random() * 9e9) + 1e9,
+      symbol:      symbol.toUpperCase(),
+      side, type,
+      origQty:     parseFloat(quantity).toFixed(3),
+      executedQty: filled ? parseFloat(quantity).toFixed(3) : '0.000',
+      avgPrice:    filled ? fillPrice.toFixed(2) : '0.00',
+      price:       fillPrice.toFixed(2),
+      status:      filled ? 'FILLED' : 'NEW',
+      timeInForce: 'GTC',
+      stopPrice:   stopPrice ? parseFloat(stopPrice).toFixed(2) : '0.00',
+    };
+  }
+
+  // ── Place order (calls Flask backend) ─────────────────────────────────────
+  async function placeOrder() {
+    const symbol    = document.getElementById('symbol').value.trim().toUpperCase();
+    const quantity  = document.getElementById('quantity').value;
+    const price     = document.getElementById('price').value;
+    const stopPrice = document.getElementById('stop_price').value;
+
+    if (!symbol || !quantity) {
+      showError('Symbol and Quantity are required.');
+      addLog('Missing symbol or quantity', 'error');
+      return;
+    }
+    if (currentType === 'LIMIT' && !price) {
+      showError('Price is required for LIMIT orders.');
+      addLog('Missing price for LIMIT order', 'error');
+      return;
+    }
+    if (currentType === 'STOP_MARKET' && !stopPrice) {
+      showError('Stop Price is required for STOP_MARKET orders.');
+      addLog('Missing stop price for STOP_MARKET order', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled  = true;
+    btn.innerHTML = '<span class="spinner"></span> Simulating...';
+
+    addLog(`[MOCK] Simulating ${currentSide} ${currentType} · ${symbol} × ${quantity}`, 'mock');
+
+    // Small delay to feel real
+    await new Promise(r => setTimeout(r, 650));
+
+    try {
+      const res = await fetch('/place_order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          symbol, side: currentSide, order_type: currentType,
+          quantity: parseFloat(quantity),
+          price:     price     ? parseFloat(price)     : null,
+          stop_price: stopPrice ? parseFloat(stopPrice) : null,
+        })
+      });
+      const json = await res.json();
+      if (json.success) {
+        addLog(`[MOCK] ✅ Order simulated — ID: ${json.data.orderId} | Status: ${json.data.status}`, 'success');
+        showSuccess(json.data);
+      } else {
+        addLog(`[ERROR] ${json.error}`, 'error');
+        showError(json.error);
+      }
+    } catch (err) {
+      // Fallback: run mock entirely in browser if Flask is unreachable
+      const data = mockOrder(symbol, currentSide, currentType, quantity, price, stopPrice);
+      addLog(`[MOCK-JS] ✅ Order simulated (offline) — ID: ${data.orderId}`, 'success');
+      showSuccess(data);
+    }
+
+    btn.disabled  = false;
+    btn.innerHTML = currentSide === 'BUY' ? 'BUY / LONG' : 'SELL / SHORT';
+  }
+
+  // ── Render success panel ───────────────────────────────────────────────────
+  function showSuccess(data) {
+    const avgPrice    = data.avgPrice || data.price || 'N/A';
+    const statusClass = data.status === 'FILLED' ? 'filled' : 'new';
+    const sideClass   = data.side   === 'BUY'    ? 'buy'    : 'sell';
+    const badge       = `<span style="font-family:'Space Mono',monospace;font-size:0.62rem;background:rgba(240,185,11,0.13);color:var(--accent);padding:2px 8px;border-radius:4px;border:1px solid rgba(240,185,11,0.28);">SIMULATED</span>`;
+
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-title success">✅ &nbsp;Order Placed Successfully &nbsp;${badge}</div>
+      <div class="result-grid">
+        <div class="result-field"><span class="rf-label">Order ID</span>     <span class="rf-value">${data.orderId}</span></div>
+        <div class="result-field"><span class="rf-label">Symbol</span>       <span class="rf-value">${data.symbol}</span></div>
+        <div class="result-field"><span class="rf-label">Side</span>         <span class="rf-value ${sideClass}">${data.side}</span></div>
+        <div class="result-field"><span class="rf-label">Type</span>         <span class="rf-value">${data.type}</span></div>
+        <div class="result-field"><span class="rf-label">Orig Qty</span>     <span class="rf-value">${data.origQty}</span></div>
+        <div class="result-field"><span class="rf-label">Executed Qty</span> <span class="rf-value">${data.executedQty}</span></div>
+        <div class="result-field"><span class="rf-label">Avg Price</span>    <span class="rf-value">${avgPrice}</span></div>
+        <div class="result-field"><span class="rf-label">Status</span>       <span class="rf-value ${statusClass}">${data.status}</span></div>
+        <div class="result-field"><span class="rf-label">Time in Force</span><span class="rf-value">${data.timeInForce}</span></div>
+        ${data.stopPrice && data.stopPrice !== '0.00'
+          ? `<div class="result-field"><span class="rf-label">Stop Price</span><span class="rf-value">${data.stopPrice}</span></div>`
+          : ''}
+      </div>
+    `;
+    document.getElementById('resultPanel').className = 'card result-panel show mock-result';
+  }
+
+  // ── Render error panel ─────────────────────────────────────────────────────
+  function showError(msg) {
+    document.getElementById('resultContent').innerHTML = `
+      <div class="result-title error">❌ &nbsp;Order Failed</div>
+      <p style="font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--red);line-height:1.8;">${msg}</p>
+    `;
+    document.getElementById('resultPanel').className = 'card result-panel show';
+  }
+
+  // ── Clock ──────────────────────────────────────────────────────────────────
+  function tick() {
+    const t = new Date().toLocaleTimeString();
+    document.getElementById('serverTime').textContent = t;
+    document.getElementById('clockBadge').textContent = t;
+  }
+  setInterval(tick, 1000);
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+  ['symbol','quantity','price','stop_price'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updatePreview);
+  });
+  buildPriceRef();
+  updatePreview();
+  tick();
+</script>
+</body>
+</html>
